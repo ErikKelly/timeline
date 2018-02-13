@@ -7,7 +7,7 @@ import './App.css';
 import ReactGA from 'react-ga';
 
 
-
+// Adds wikipedia results for event
 class EventWiki extends Component {
 
   constructor(props){
@@ -25,7 +25,7 @@ class EventWiki extends Component {
       blah: 0,
       events: this.props.events,
       selectedEvents: this.props.selectedEvents,
-      wikiCopy: '',
+      wikiCopy: ''
     }
 
   }
@@ -34,8 +34,9 @@ class EventWiki extends Component {
   getWiki(searchWiki,wikiResults){
 
     var searchTitle = encodeURI(searchWiki);
-    var wikiText = '';
-    var apiCall = 'https://en.wikipedia.org/w/api.php?action=query'+
+    const wikiApi = 'https://en.wikipedia.org/w/api.php?action=query';
+    // finds specified number of wiki pages based on search terms
+    var apiCall = wikiApi +
       '&list=search'+
       '&srsearch='+ searchTitle +
       '&format=json'+
@@ -44,16 +45,17 @@ class EventWiki extends Component {
       '&origin=*';
 
       axios.get(apiCall).then(response => {
-        wikiText = [];
-
+        var wikiText = [];
         var pageID = response.data.query.search[0].pageid;
         var wikiImage = '';
-        var imageCall = 'https://en.wikipedia.org/w/api.php?action=query'+
-        '&pageids='+ pageID +
-        '&prop=pageimages'+
-        '&format=json'+
-        '&pithumbsize=250'+
-        '&origin=*';
+        // finds first image of first related wiki result
+        var imageCall = wikiApi +
+          '&pageids='+ pageID +
+          '&prop=pageimages'+
+          '&format=json'+
+          '&pithumbsize=250'+
+          '&origin=*';
+
         axios.get(imageCall).then(imageResponse => {
 
           var i = 0;
@@ -67,37 +69,31 @@ class EventWiki extends Component {
 
             }else{
               wikiText.push(<div key={"wiki_" + wiki.title} className="wiki-result"><div className="wiki-copy"><a href={"https://en.wikipedia.org/?curid=" + wiki.pageid} target="_blank">{wiki.title}</a> {snippet}</div></div>);
-
             }
 
             i++;
           })
 
           this.setState({
-            wikiCopy: wikiText,
+            wikiCopy: wikiText
           })
 
         });
 
-
       }).catch(error => {
         console.log('Error fetching and parsing data', error);
       });
-      // end wiki search
   }
 
   render(){
-
     return (
-
       <div className="wiki-results">{this.state.wikiCopy}</div>
-
     )
   }
 }
 
 
-
+// displays events of selected year
 class EventList extends Component {
 
   constructor(props){
@@ -107,7 +103,7 @@ class EventList extends Component {
       endDate: 0,
       value: 0,
       events: this.props.events,
-      selectedEvents: this.props.selectedEvents,
+      selectedEvents: this.props.selectedEvents
     }
   }
 
@@ -124,39 +120,30 @@ class EventList extends Component {
       displayEvent.push(<div key={"event_none"} className={"epoch-event "}><div className={"epoch-event-content " }><div className={"event-title "}>Scroll to year.</div></div></div>);
     }
 
-
-
     return (
-
       <div className="epoch-events">
       {displayEvent}
       </div>
-
     )
-
   }
 }
 
-
-
-
-
+// creates year selector
 class TimeLine extends Component {
   constructor(props){
-      super(props);
+    super(props);
     this.state = {
       startDate: 0,
       endDate: 0,
       value: 0,
       events: this.props.events,
       activeEvents: '',
-      selectedEvents: '',
-
+      selectedEvents: ''
     }
   }
 
   handleChangeStart = () => {
-    console.log('Change event started')
+    console.log('Change event started');
   };
 
   handleChange = value => {
@@ -184,21 +171,18 @@ class TimeLine extends Component {
     this.setState({
       selectedEvents: '',
       activeEvents: <div key="scroll-events" className={"event-record "}><div className={"event-title "}>Scroll to year</div></div>,
-      value: -1000,
+      value: -1000
     });
   }
 
-
   handleChangeComplete = (nextProps) => {
-    var activeEvents = []
-
-    var selectedEvents = []
-
+    var activeEvents = [];
+    var selectedEvents = [];
 
     if (this.props.events){
       this.props.events.forEach(item => {
         if (this.state.value >= item.start && this.state.value <= item.end){
-          selectedEvents.push(item)
+          selectedEvents.push(item);
         }
       })
       this.setState({
@@ -206,13 +190,13 @@ class TimeLine extends Component {
         selectedEvents: selectedEvents
       });
     }
-      console.log('Change event completed: ' + this.state.value)
+      console.log('Change event completed: ' + this.state.value);
   };
 
   render () {
-    var { value } = this.state
-    var minDate = parseInt(this.props.startDate,0)
-    var maxDate = parseInt(this.props.endDate,0)
+    var { value } = this.state;
+    var minDate = parseInt(this.props.startDate,0);
+    var maxDate = parseInt(this.props.endDate,0);
 
     if (value > maxDate || value < minDate){
       value = minDate;
@@ -240,7 +224,7 @@ class TimeLine extends Component {
         </div>
           <EventList
             selectedEvents = {this.state.selectedEvents} />
-        </div> // epoch-slider
+        </div>
       )
 
     }else{
@@ -255,7 +239,7 @@ class TimeLine extends Component {
   }
 }
 
-
+// Creates Epoch navigation
 class Epoch extends Component {
   constructor (props) {
     super(props)
@@ -267,15 +251,12 @@ class Epoch extends Component {
       epochs: '',
       events: '',
       activeEvents: '',
-      navPos: 'relative',
+      navPos: 'relative'
     }
-
-
 
   }
 
-
-
+  // reads the periods file to determine epoch options
   componentDidMount(){
       axios.get('/json/periods.json').then((response)=>{
           this.setState(()=>{
@@ -284,12 +265,9 @@ class Epoch extends Component {
            }
         })
     })
+  }
 
-
-
-}
   getEpoch(){
-
     if (this.state.epochs){
       var epochDiv = [];
       this.state.epochs.map((item,key) => {
@@ -300,11 +278,12 @@ class Epoch extends Component {
       });
       return <div className="epoch-selectors">{epochDiv}</div>;
     }
-}
+  }
 
 
 
   selectEpoch(item){
+    // reads events file based on epoch selected
     var fileTitle = item.epoch.toLowerCase().replace(/ /g,"_");
     axios.get('/json/'+ fileTitle +'.json').then((response)=>{
         this.setState(()=>{
@@ -315,7 +294,7 @@ class Epoch extends Component {
              endDate: item.end,
              value: item.start,
              activeEvents: '',
-             selectedEvents: '',
+             selectedEvents: ''
            }
         })
     })
@@ -331,7 +310,7 @@ class Epoch extends Component {
         events = {this.state.events}
         startDate = {this.state.startDate}
         endDate = {this.state.endDate} />
-      </div> // history-nav
+      </div>
     )
   }
 }
