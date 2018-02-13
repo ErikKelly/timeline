@@ -1,0 +1,175 @@
+.App {
+  text-align: center;
+}
+
+body{
+  background-color: #EEE;
+}
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+.epoch-selectors{
+  text-align: center;
+}
+.epoch-button{
+  border: 2px solid #3d0000;
+  color: #3d0000;
+  display: inline-block;
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+  min-width: 150px;
+  border-radius: 15px;
+  background-color: #FFF;
+}
+.epoch-button:hover{
+  background-color: #EEE;
+}
+.epoch-button.selected{
+  color: #FFF;
+  background-color: #3d0000;
+}
+.epoch-title{
+  margin: 30px 0 20px 0;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2.5em;
+  color: #3d0000;
+  font-family: 'Playfair Display SC', serif;
+
+}
+.epoch-slider{
+  text-align: center;
+}
+.epoch-slider > div{
+  display: inline-block;
+}
+.epoch-slider > div.slider{
+  width: 70%;
+}
+.epoch-start.date {
+  width: 10%;
+  text-align: center;
+  vertical-align: top;
+  font-size: 1.5em;
+  padding-top: 10px;
+  color: #7cb342;
+}
+div.epoch-events {
+  display: block;
+  width: 90%;
+  position: relative;
+  border: 2px solid #3d0000;
+  margin: 10px auto;
+  border-radius: 15px;
+  min-height: 100px;
+  overflow: hidden;
+  background-color: #FFF;
+  text-align: center;
+}
+.epoch-event{
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+}
+.epoch-event-content {
+  margin: 20px;
+  border: 1px solid #7cb342;
+  border-radius: 15px;
+  padding: 10px;
+}
+.event-title.Header{
+  display: block;
+  background-color: #EEE;
+}
+.epoch-event.Header{
+  width: 100%;
+}
+.epoch-event-content.Header{
+  border: 0;
+}
+.epoch-event.Event .event-title{
+}
+.event-title{
+  padding: 20px;
+}
+.event-title {
+  font-size: 1.5em;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.event-detail{
+  padding: 0 20px;
+  font-size: initial;
+  -webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 3s; /* Firefox < 16 */
+  -ms-animation: fadein 3s; /* Internet Explorer */
+  -o-animation: fadein 3s; /* Opera < 12.1 */
+  animation: fadein 3s;
+
+}
+.event-detail img{
+  max-width: 200px;
+}
+p{
+  margin-top: 0;
+}
+.wiki-copy {
+  border-top: 1px solid #7cb342;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+.wiki-results{
+  font-size: .9em;
+  text-align: left;
+}
+.wiki-result{
+  padding-bottom: 5px;
+}
+.wiki-image{
+  text-align: center;
+  margin: 10px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .epoch-event{
+  width: 100%;
+  }
+  .epoch-start.date{
+  font-size: .8em;
+  padding-top: 18px;
+  }
+  .epoch-title{
+  font-size: 1.5em;
+  }
+  .event-title{
+  font-size: 1.25em;
+  }
+}
