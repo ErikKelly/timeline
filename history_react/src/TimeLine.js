@@ -270,10 +270,7 @@ class Epoch extends Component {
       navPos: 'relative',
     }
 
-    // Add your tracking ID created from https://analytics.google.com/analytics/web/#home/
-    ReactGA.initialize('UA-113793255-1');
-    // This just needs to be called once since we have no routes in this case.
-    ReactGA.pageview(window.location.pathname);
+
 
   }
 
